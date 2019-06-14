@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_draggable/draggable/draggable_demo.dart';
 import 'package:flutter_draggable/draggable/draggable_grid_widget.dart';
-//import 'package:flutter_draggable/draggable/draggable_simple.dart_widget.dart';
+import 'package:flutter_draggable/draggable/draggable_simple.dart';
 
 void main() => runApp(MyApp());
 
@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
     Map<String, WidgetBuilder> routesMap = Map<String, WidgetBuilder>();
     routesMap.addAll(HJDraggableDemo.route());
     routesMap.addAll(HJDraggableGridWidget.route());
+    routesMap.addAll(HJDraggableSimpeDemo.route());
     return routesMap;
   }
 }

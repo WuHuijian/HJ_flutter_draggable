@@ -25,7 +25,9 @@ class _HJDraggableDemoState extends State<HJDraggableDemo> {
                 title: Text('Draggable简单使用'),
                 subtitle: Text('Draggable和DragTarget分开实例'),
                 onTap: () {
-                  setState(() {});
+                  setState(() {
+                    Navigator.of(context).pushNamed('/draggable/simple');
+                  });
                 },
               ),
             ),
