@@ -69,9 +69,9 @@ class HJDraggableSimpeDemoState extends State<HJDraggableSimpeDemo> {
       left: data.offset.dx,
       top: data.offset.dy,
       child: Draggable(
-          data: data,
-          child: baseItem(data, true),
-          feedback: Container(
+          data: data,// 要传递的数据
+          child: baseItem(data, true),// 要拖动的组件
+          feedback: Container(// 移动中的组件
             width: 100,
             height: 100,
             color: data.color.withOpacity(0.8),
@@ -83,17 +83,18 @@ class HJDraggableSimpeDemoState extends State<HJDraggableSimpeDemo> {
                       color: Colors.white,decoration: TextDecoration.none)),
             ),
           ),
-          childWhenDragging: Container(
+          childWhenDragging: Container(// 拖动后原位置组件
               width: 80,
               height: 80,
               color: Colors.white),
-          onDragStarted: () {
+          onDragStarted: () {// 开始拖动回调
             print('=== onDragStarted');
           },
+          // 接收失败回调
           onDraggableCanceled: (Velocity velocity, Offset offset) {
             print('=== onDraggableCanceled');
           },
-          onDragCompleted: () {
+          onDragCompleted: () {// 接收成功回调
             print('=== onDragCompleted');
           }),
     );
@@ -105,27 +106,29 @@ class HJDraggableSimpeDemoState extends State<HJDraggableSimpeDemo> {
         left: data.offset.dx,
         top: data.offset.dy,
         child: DragTarget(
+          //展示的组件
             builder: (context, candidateData, rejectedData) {
               return baseItem(data, false);
             },
+            //返回是否接收 参数为Draggable的data 方向相同则允许接收
             onWillAccept: (DataBean acceptData) {
               print('=== onWillAccept: ' + acceptData.title + '==>' + data.title);
               return acceptData.title.compareTo(data.title) == 0;
             },
-            onAccept: (DataBean acceptData) {
+            onAccept: (DataBean acceptData) {//接收方法
               print('=== onAccept: ' + acceptData.title + '==>' + data.title);
-              setState(() {
+              setState(() {//修改数据进行重绘
+                // 交换颜色 并生成随机方向
                 var index = _targerDatas.indexOf(data);
                 var tmpColor = data.color;
                 data.color = acceptData.color;
-
                 _targerDatas.remove(data);
                 _targerDatas.insert(index, data);
                 _dragData.title = randomTitle();
                 _dragData.color = tmpColor;
               });
             },
-            onLeave: (DataBean acceptData) {
+            onLeave: (DataBean acceptData) {// 经过然后离开回调
               print('=== onLeave: ' + acceptData.title + '==>' + data.title);
             }));
   }
